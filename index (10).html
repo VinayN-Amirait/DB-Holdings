@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DB Holdings — A Diversified Holdings Company</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F2038;
+    --ink-soft:#17304F;
+    --paper:#F5F4EF;
+    --paper-dim:#EBE9E1;
+    --slate:#57647A;
+    --brass:#A9814F;
+    --brass-soft:#C7A576;
+    --steel:#2F6690;
+    --line:#D9D7CD;
+    --line-dark:rgba(245,244,239,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.04em;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 40px;}
+  @media (max-width:640px){ .wrap{padding:0 22px;} }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(245,244,239,0.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 40px;
+    max-width:1180px; margin:0 auto;
+  }
+  .wordmark{
+    font-family:'Fraunces', serif; font-weight:500; font-size:1.15rem;
+    display:flex; align-items:baseline; gap:8px;
+  }
+  .wordmark .tick{
+    font-family:'IBM Plex Mono', monospace; font-size:0.62rem; color:var(--brass);
+    letter-spacing:0.12em; font-weight:500;
+  }
+  nav ul{list-style:none; display:flex; gap:34px;}
+  nav a{
+    font-size:0.86rem; font-weight:500; color:var(--slate);
+    letter-spacing:0.02em;
+    position:relative; padding:4px 0;
+  }
+  nav a:hover{color:var(--ink);}
+  .nav-toggle{display:none;}
+  @media (max-width:760px){
+    nav ul{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:flex; align-items:flex-end;
+    color:#F5F4EF;
+    overflow:hidden;
+  }
+  .hero-media{position:absolute; inset:0; z-index:0;}
+  .hero-media img{width:100%; height:100%; object-fit:cover; filter:saturate(0.9) brightness(0.7);}
+  .hero-media::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(15,32,56,0.55) 0%, rgba(15,32,56,0.45) 35%, rgba(15,32,56,0.92) 100%);
+  }
+  .hero-content{
+    position:relative; z-index:1;
+    padding:120px 40px 76px;
+    max-width:1180px; margin:0 auto; width:100%;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--brass-soft);
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:""; width:28px; height:1px; background:var(--brass-soft);}
+  .hero h1{
+    font-size:clamp(2.4rem, 5.4vw, 4.6rem);
+    line-height:1.04;
+    max-width:14ch;
+    margin-bottom:26px;
+  }
+  .hero p.lede{
+    font-size:1.15rem; color:#D8D9D2; max-width:44ch; font-weight:400;
+    margin-bottom:36px;
+  }
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:13px 26px; font-size:0.88rem; font-weight:500;
+    border-radius:2px; transition:all .2s ease;
+  }
+  .btn-primary{background:var(--brass); color:#161104;}
+  .btn-primary:hover{background:var(--brass-soft);}
+  .btn-ghost{border:1px solid rgba(245,244,239,0.35); color:#F5F4EF;}
+  .btn-ghost:hover{border-color:#F5F4EF;}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:110px 0;}
+  @media (max-width:760px){ section{padding:72px 0;} }
+  .section-head{margin-bottom:56px; max-width:640px;}
+  .section-head .eyebrow{color:var(--brass); margin-bottom:16px;}
+  .section-head .eyebrow::before{background:var(--brass);}
+  .section-head h2{font-size:clamp(1.8rem, 3.4vw, 2.6rem); line-height:1.15;}
+
+  /* ---------- ABOUT ---------- */
+  #about{background:var(--paper);}
+  .about-grid{
+    display:grid; grid-template-columns:1.3fr 1fr; gap:70px; align-items:start;
+  }
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr; gap:44px;} }
+  .about-copy p{color:var(--slate); font-size:1.02rem; margin-bottom:20px; max-width:52ch;}
+  .about-copy p.lead{color:var(--ink); font-size:1.18rem; font-family:'Fraunces', serif; font-weight:400; line-height:1.5;}
+  .ledger{
+    border-top:1px solid var(--line);
+  }
+  .ledger-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .ledger-row .label{font-size:0.82rem; color:var(--slate); letter-spacing:0.02em;}
+  .ledger-row .value{font-family:'Fraunces', serif; font-size:1.3rem; color:var(--ink);}
+
+  /* ---------- COMPANIES ---------- */
+  #companies{background:var(--ink); color:#F5F4EF;}
+  #companies .section-head .eyebrow{color:var(--brass-soft);}
+  #companies .section-head .eyebrow::before{background:var(--brass-soft);}
+  #companies .section-head h2{color:#F5F4EF;}
+  #companies .section-head p{color:#B9BFCB; margin-top:14px; font-size:1.02rem; max-width:56ch;}
+
+  .portfolio{border-top:1px solid var(--line-dark);}
+  .holding{
+    display:grid; grid-template-columns:220px 100px 1fr 220px;
+    gap:32px; align-items:center;
+    padding:34px 0; border-bottom:1px solid var(--line-dark);
+    transition:background .2s ease;
+  }
+  .holding:hover{background:rgba(245,244,239,0.03);}
+  .holding-media{
+    width:220px; height:140px; border-radius:2px; overflow:hidden;
+    background:var(--ink-soft);
+  }
+  .holding-code{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--brass-soft);
+    letter-spacing:0.06em;
+  }
+  .holding-code span{display:block; font-size:0.66rem; color:#7C8598; margin-top:6px;}
+  .holding-body h3{font-size:1.5rem; font-weight:500; color:#F5F4EF; margin-bottom:8px;}
+  .holding-body .sector{
+    font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em;
+    color:var(--steel); font-weight:500; margin-bottom:12px; display:inline-block;
+    border:1px solid rgba(47,102,144,0.5); padding:4px 10px; border-radius:20px;
+  }
+  .holding-body p{color:#B9BFCB; font-size:0.96rem; max-width:52ch;}
+  .holding-link{
+    justify-self:end; text-align:right;
+    font-size:0.86rem; font-weight:500; color:#F5F4EF;
+    display:flex; align-items:center; gap:8px; white-space:nowrap;
+  }
+  .holding-link .arrow{transition:transform .2s ease;}
+  .holding:hover .holding-link .arrow{transform:translateX(4px);}
+
+  @media (max-width:900px){
+    .holding{grid-template-columns:1fr; gap:16px;}
+    .holding-media{width:100%; height:200px;}
+    .holding-link{justify-self:start; text-align:left;}
+  }
+
+  /* ---------- CONTACT ---------- */
+  #contact{background:var(--paper);}
+  .contact-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:70px;
+  }
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr; gap:44px;} }
+  .contact-copy p{color:var(--slate); max-width:44ch; margin-top:16px;}
+  .contact-list{margin-top:40px;}
+  .contact-item{
+    padding:18px 0; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .contact-item:last-child{border-bottom:1px solid var(--line);}
+  .contact-item .k{font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--slate);}
+  .contact-item .v{font-family:'Fraunces', serif; font-size:1.1rem;}
+
+  form.card{
+    background:#fff; border:1px solid var(--line); padding:36px;
+  }
+  form.card label{display:block; font-size:0.78rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--slate); margin-bottom:8px; margin-top:20px;}
+  form.card label:first-child{margin-top:0;}
+  form.card input, form.card textarea{
+    width:100%; border:none; border-bottom:1px solid var(--line);
+    background:transparent; padding:10px 2px; font-family:'Inter', sans-serif; font-size:0.98rem; color:var(--ink);
+  }
+  form.card input:focus, form.card textarea:focus{outline:none; border-bottom-color:var(--brass);}
+  form.card button{
+    margin-top:30px; width:100%; background:var(--ink); color:#F5F4EF;
+    padding:14px; font-size:0.9rem; font-weight:500; border:none; cursor:pointer;
+    transition:background .2s ease;
+  }
+  form.card button:hover{background:var(--ink-soft);}
+
+  footer{
+    background:var(--ink); color:#7C8598; padding:34px 0;
+    font-size:0.82rem;
+  }
+  .footer-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+
+  :focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="wordmark">DB Holdings <span class="tick">DBH</span></div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#companies">Our Companies</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-media">
+    <img src="https://images.pexels.com/photos/4049519/pexels-photo-4049519.png?auto=compress&cs=tinysrgb&w=1920" alt="Modern glass office towers at dusk">
+  </div>
+  <div class="hero-content">
+    <div class="eyebrow">A Diversified Holdings Company</div>
+    <h1>Businesses built to last, under one roof.</h1>
+    <p class="lede">DB Holdings owns and grows companies that show up for people at the biggest moments of everyday life — getting the laundry done, building the home, and financing it all.</p>
+    <div class="hero-actions">
+      <a href="#companies" class="btn btn-primary">See our companies →</a>
+      <a href="#about" class="btn btn-ghost">Our vision</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-copy">
+      <div class="section-head" style="margin-bottom:28px;">
+        <div class="eyebrow">About Us</div>
+        <h2>We back operators, not just ideas.</h2>
+      </div>
+      <p class="lead">DB Holdings is a private holding company that acquires and grows well-run, founder-led businesses across essential, everyday industries.</p>
+      <p>We're not a fund looking for a quick exit. We buy in for the long haul, invest in the people already running the business, and stay close enough to help with capital, systems, and strategy — without micromanaging the trade.</p>
+      <p>Our portfolio today spans laundry services, custom home building, and mortgage brokerage: three different trades united by the same idea, that good businesses are built one satisfied customer at a time.</p>
+    </div>
+    <div class="ledger">
+      <div class="ledger-row"><span class="label">Holding companies</span><span class="value">3</span></div>
+      <div class="ledger-row"><span class="label">Sectors</span><span class="value">Laundry · Homes · Finance</span></div>
+      <div class="ledger-row"><span class="label">Headquarters</span><span class="value">Canada</span></div>
+      <div class="ledger-row"><span class="label">Approach</span><span class="value">Long-term ownership</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="companies">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Our Companies</div>
+      <h2>The portfolio.</h2>
+      <p>Three independent companies, each run by people who know their trade — connected by the same standard of doing right by the customer.</p>
+    </div>
+
+    <div class="portfolio">
+      <div class="holding">
+        <div class="holding-media">
+          <img src="https://images.pexels.com/photos/14556070/pexels-photo-14556070.jpeg?auto=compress&cs=tinysrgb&w=800" alt="A cozy, well-lit laundromat at night">
+        </div>
+        <div class="holding-code">TCL<span>Est. holding</span></div>
+        <div class="holding-body">
+          <h3>The Coin Laundry</h3>
+          <span class="sector">Laundry Services</span>
+          <p>Coin-operated and full-service laundromats built for busy neighborhoods — clean machines, fair pricing, and a location you can count on every day of the week.</p>
+        </div>
+        <a class="holding-link" href="https://thecoinlaundry.ca" target="_blank" rel="noopener">thecoinlaundry.ca <span class="arrow">→</span></a>
+      </div>
+
+      <div class="holding">
+        <div class="holding-media">
+          <img src="https://images.pexels.com/photos/4567374/pexels-photo-4567374.jpeg?auto=compress&cs=tinysrgb&w=800" alt="A home mid-renovation with tools and materials">
+        </div>
+        <div class="holding-code">BAI<span>Est. holding</span></div>
+        <div class="holding-body">
+          <h3>BAI Homes</h3>
+          <span class="sector">Custom Homes &amp; Renovation</span>
+          <p>Custom home builds and whole-home renovations, from the first sketch to the final walkthrough, for homeowners who want it planned properly and built right.</p>
+        </div>
+        <a class="holding-link" href="https://bai-homes.ca" target="_blank" rel="noopener">bai-homes.ca <span class="arrow">→</span></a>
+      </div>
+
+      <div class="holding">
+        <div class="holding-media">
+          <img src="https://images.pexels.com/photos/34135038/pexels-photo-34135038.jpeg?auto=compress&cs=tinysrgb&w=800" alt="House keys and mortgage documents on a desk">
+        </div>
+        <div class="holding-code">CBL<span>Est. holding</span></div>
+        <div class="holding-body">
+          <h3>Coastal Blue</h3>
+          <span class="sector">Mortgage Brokerage</span>
+          <p>An independent mortgage brokerage that shops the market on your behalf, matching buyers and homeowners with the right rate and the right lender — no runaround.</p>
+        </div>
+        <a class="holding-link" href="https://coastalblue.ca" target="_blank" rel="noopener">coastalblue.ca <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-copy">
+      <div class="section-head" style="margin-bottom:0;">
+        <div class="eyebrow">Contact</div>
+        <h2>Let's talk.</h2>
+        <p>Whether you're a customer of one of our companies, a business owner exploring a partnership, or just curious about DB Holdings — we'd like to hear from you.</p>
+      </div>
+      <div class="contact-list">
+        <div class="contact-item"><span class="k">Email</span><span class="v">hello@dbholdings.ca</span></div>
+        <div class="contact-item"><span class="k">Phone</span><span class="v">Add your number</span></div>
+        <div class="contact-item"><span class="k">Location</span><span class="v">Canada</span></div>
+      </div>
+    </div>
+    <form class="card" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Message sent';">
+      <label for="name">Name</label>
+      <input id="name" type="text" required>
+      <label for="email">Email</label>
+      <input id="email" type="email" required>
+      <label for="message">Message</label>
+      <textarea id="message" rows="4" required></textarea>
+      <button type="submit">Send message</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 DB Holdings. All rights reserved.</span>
+    <span>The Coin Laundry · BAI Homes · Coastal Blue</span>
+  </div>
+</footer>
+
+</body>
+</html>
